@@ -56,23 +56,40 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 setupStaticFolders(app);
-connectDB();
+
+// Database connection middleware for all API routes
+app.use('/api', async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("Database connection middleware error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Database connection failed",
+      error: err.message
+    });
+  }
+});
 
 // Har din raat 12:00 IST — home/market cards par live result hata kar *** / ** placeholders
-cron.schedule(
-  '0 0 * * *',
-  async () => {
-    try {
-      const r = await resetDailyMarketDisplay();
-      console.log(
-        `[cron] Daily market display reset — modified: ${r.modifiedCount ?? r.matchedCount}`
-      );
-    } catch (e) {
-      console.error('[cron] resetDailyMarketDisplay failed:', e);
-    }
-  },
-  { timezone: 'Asia/Kolkata' }
-);
+// (Schedules only in local development environment to prevent blocking/crashing Vercel serverless)
+if (process.env.NODE_ENV !== 'production') {
+  cron.schedule(
+    '0 0 * * *',
+    async () => {
+      try {
+        const r = await resetDailyMarketDisplay();
+        console.log(
+          `[cron] Daily market display reset — modified: ${r.modifiedCount ?? r.matchedCount}`
+        );
+      } catch (e) {
+        console.error('[cron] resetDailyMarketDisplay failed:', e);
+      }
+    },
+    { timezone: 'Asia/Kolkata' }
+  );
+}
 
 app.get('/', (req, res) => {
   res.send('Admin Panel API is running on Vercel Serverless!');
