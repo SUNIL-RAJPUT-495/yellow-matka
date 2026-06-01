@@ -3,7 +3,7 @@ import Transaction from '../models/Transaction.js';
 import Bet from '../models/Bid.js';
 import GDBet from '../models/GDBid.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { generateUniqueReferralCode } from '../utils/generateReferral.js';
 import { getTransactionSettings, computeReferralAmounts } from '../utils/transactionSettingsHelper.js';
 import { notifyUserBonus } from '../utils/notificationHelper.js';

@@ -2,7 +2,7 @@ import { GameRate } from '../models/GameRate.js';
 import { HowToPlay } from '../models/HowToPlay.js';
 import { Contact } from '../models/Contact.js';
 import User from '../models/User.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 // --- GAME RATES ---
 export const getGameRates = async (req, res) => {
