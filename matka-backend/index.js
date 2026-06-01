@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import express from 'express';
-import cors from 'cors';
 import connectDB from './Config/Db.js';
 import morgan from 'morgan';
 import userRouter from './routes/userRouter.js';
@@ -21,10 +20,37 @@ import { resetDailyMarketDisplay } from './jobs/resetMarketDisplay.js';
 const app = express();
 
 
-app.use(cors({ 
-  origin: ["http://localhost:5173", "http://localhost:5174","https://yellow-matka.vercel.app", process.env.FRONTEND_URL], 
-  credentials: true 
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:3000",
+  "https://yellow-matka.vercel.app"
+];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  
+  if (origin) {
+    const cleanedOrigin = origin.trim().replace(/\/$/, "");
+    const isAllowed = allowedOrigins.some(o => o.trim().replace(/\/$/, "") === cleanedOrigin)
+      || (process.env.FRONTEND_URL && process.env.FRONTEND_URL.trim().replace(/\/$/, "") === cleanedOrigin)
+      || cleanedOrigin.endsWith('.vercel.app');
+      
+    if (isAllowed) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+  }
+  
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS,PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+});
 
 app.use(express.json());
 app.use(morgan('dev'));
@@ -34,18 +60,18 @@ connectDB();
 
 // Har din raat 12:00 IST — home/market cards par live result hata kar *** / ** placeholders
 cron.schedule(
-    '0 0 * * *',
-    async () => {
-        try {
-            const r = await resetDailyMarketDisplay();
-            console.log(
-                `[cron] Daily market display reset — modified: ${r.modifiedCount ?? r.matchedCount}`
-            );
-        } catch (e) {
-            console.error('[cron] resetDailyMarketDisplay failed:', e);
-        }
-    },
-    { timezone: 'Asia/Kolkata' }
+  '0 0 * * *',
+  async () => {
+    try {
+      const r = await resetDailyMarketDisplay();
+      console.log(
+        `[cron] Daily market display reset — modified: ${r.modifiedCount ?? r.matchedCount}`
+      );
+    } catch (e) {
+      console.error('[cron] resetDailyMarketDisplay failed:', e);
+    }
+  },
+  { timezone: 'Asia/Kolkata' }
 );
 
 app.get('/', (req, res) => {

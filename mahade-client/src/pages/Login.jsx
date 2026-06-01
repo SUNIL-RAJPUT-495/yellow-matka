@@ -4,7 +4,7 @@ import { IoCall } from "react-icons/io5";
 import { MdOutlineLogin } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
-import Axios from '../utils/axios'; 
+import Axios from '../utils/axios';
 import SummaryApi, { baseURL } from '../common/SummerAPI';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/userSlice'
@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';;
 export const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
+
     const [formData, setFormData] = useState({
         mobile: '',
         pass: ''
@@ -58,19 +58,19 @@ export const Login = () => {
         setLoading(true);
         try {
             const res = await Axios({
-                url: SummaryApi.loginUser.url, 
+                url: SummaryApi.loginUser.url,
                 method: SummaryApi.loginUser.method,
                 data: formData
             });
 
             if (res.data.success) {
                 localStorage.setItem('access_token', res.data.token);
-                
-                localStorage.setItem('user_data', JSON.stringify(res.data.user)); 
+
+                localStorage.setItem('user_data', JSON.stringify(res.data.user));
                 dispatch(setUser(res.data.user));
 
                 toast.success("Login Successful!");
-                navigate('/'); 
+                navigate('/');
             } else {
                 toast.error(res.data.message || "Login failed!");
             }
@@ -85,12 +85,12 @@ export const Login = () => {
 
     return (
         <div className='bg-mahadev bg-cover bg-center min-h-screen flex items-center justify-center px-4 py-8 relative'>
-            
+
             <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PHBhdGggZD0iTTAgMGg0MHY0MEgwVjB6bTIwIDIwaDIwdjIwSDIWMjB6TTAgMjBoMjB2MjBIMFYyMHoyMCAwaDIwdjIwSDIwVjB6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
 
             <div className='bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-2xl w-full max-w-md p-6 sm:p-8 relative border border-white/50 transform transition-all z-10'>
 
-                <div className='flex flex-col items-center mb-6'> 
+                <div className='flex flex-col items-center mb-6'>
                     <div className='w-16 h-16 bg-white p-1 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center mb-3 overflow-hidden'>
                         {logo ? (
                             <img src={`${baseURL}/uploads/${logo}`} alt="Website Logo" className="w-full h-full object-contain" />
@@ -100,7 +100,7 @@ export const Login = () => {
                             </div>
                         )}
                     </div>
-                    
+
                     <h2 className='text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-[#2D144B] to-[#7f29c4] tracking-tight mb-1'>
                         Welcome Back
                     </h2>
@@ -140,7 +140,7 @@ export const Login = () => {
                         />
                     </div>
 
-                    <button 
+                    <button
                         type="submit"
                         disabled={loading}
                         className='w-full h-12 mt-5 rounded-xl bg-gradient-to-r from-[#31004A] to-[#601a91] text-white font-bold text-base tracking-wide flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-300 ease-out disabled:opacity-70 disabled:cursor-not-allowed'

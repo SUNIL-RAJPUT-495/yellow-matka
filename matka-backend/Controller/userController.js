@@ -22,17 +22,17 @@ export const createUser = async (req, res) => {
         const { name, mobile, email, refCode, pass, role } = req.body;
 
         if (!name || !mobile || !pass) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Name, mobile and password is required!' 
+            return res.status(400).json({
+                success: false,
+                message: 'Name, mobile and password is required!'
             });
         }
 
         const existingUser = await User.findOne({ mobile });
         if (existingUser) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Mobile number is alredy registered!' 
+            return res.status(400).json({
+                success: false,
+                message: 'Mobile number is alredy registered!'
             });
         }
 
@@ -65,12 +65,12 @@ export const createUser = async (req, res) => {
 
         const initialBonus = signupBonusAmt + referredExtraAmount;
 
-        const user = await User.create({ 
-            name, 
-            mobile, 
+        const user = await User.create({
+            name,
+            mobile,
             ...(email && String(email).trim() ? { email: String(email).trim().toLowerCase() } : {}),
-            referredBy: refCodeNorm || null, 
-            password: hashedPassword, 
+            referredBy: refCodeNorm || null,
+            password: hashedPassword,
             referralCode: myReferralCode,
             role: role || 'user',
             wallet: { realBalance: 0, bonusBalance: initialBonus },
@@ -131,15 +131,15 @@ export const createUser = async (req, res) => {
         const userResponse = user.toObject();
         delete userResponse.password;
 
-        res.status(201).json({ 
-            success: true, 
-            message: 'User created successfully', 
-            user: userResponse 
+        res.status(201).json({
+            success: true,
+            message: 'User created successfully',
+            user: userResponse
         });
 
     } catch (error) {
-        console.error("User Creation Error: ", error); 
-        
+        console.error("User Creation Error: ", error);
+
         if (error.message.includes('System mein sirf ek hi Admin') || error.name === 'ValidationError') {
             return res.status(400).json({
                 success: false,
@@ -147,10 +147,10 @@ export const createUser = async (req, res) => {
             });
         }
 
-        res.status(500).json({ 
-            success: false, 
-            message: error.message || 'Internal server error', 
-            error: error.message 
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Internal server error',
+            error: error.message
         });
     }
 }
@@ -185,10 +185,10 @@ export const loginUser = async (req, res) => {
         const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         const cookieOptions = {
-            httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production', 
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'None',
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) 
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
         };
 
         const { wallet, walletBalance } = walletFromUser(user);
@@ -196,7 +196,7 @@ export const loginUser = async (req, res) => {
         res.cookie("token", token, cookieOptions).status(200).json({
             success: true,
             message: 'Login successful',
-            token: token, 
+            token: token,
             user: {
                 _id: user._id,
                 name: user.name,
@@ -222,23 +222,23 @@ export const getUserProfile = async (req, res) => {
         const user = await User.findById(req.userId).select('-password');
 
         if (!user) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'User nahi mila' 
+            return res.status(404).json({
+                success: false,
+                message: 'User nahi mila'
             });
         }
 
         const { wallet, walletBalance } = walletFromUser(user);
 
-        res.status(200).json({ 
-            success: true, 
+        res.status(200).json({
+            success: true,
             user: {
                 _id: user._id,
                 name: user.name,
                 mobile: user.mobile,
                 email: user.email,
                 wallet,
-                walletBalance, 
+                walletBalance,
                 role: user.role,
                 status: user.status,
                 referralCode: user.referralCode,
@@ -248,18 +248,18 @@ export const getUserProfile = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ 
-            success: false, 
-            message: 'Internal server error', 
-            error: error.message 
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: error.message
         });
     }
-}  
+}
 
 
 export const getUser = async (req, res) => {
     try {
-        const user = await User.find(); 
+        const user = await User.find();
         res.status(200).json({ user });
     } catch (error) {
         res.status(500).json({ message: 'Internal server error', error: error.message });
@@ -283,7 +283,7 @@ export const getAllUsers = async (req, res) => {
 export const getAdminDashboardStats = async (req, res) => {
     try {
         const totalUsers = await User.countDocuments();
-        
+
         const depositStats = await Transaction.aggregate([
             { $match: { type: 'Deposit', status: 'Approved' } },
             { $group: { _id: null, total: { $sum: "$amount" } } }
@@ -304,11 +304,11 @@ export const getAdminDashboardStats = async (req, res) => {
         const totalBets = betStats[0]?.total || 0;
 
         const winningStats = await Transaction.aggregate([
-             { $match: { type: 'Winning', status: 'Approved' } },
-             { $group: { _id: null, total: { $sum: "$amount" } } }
+            { $match: { type: 'Winning', status: 'Approved' } },
+            { $group: { _id: null, total: { $sum: "$amount" } } }
         ]);
         const totalWinnings = winningStats[0]?.total || 0;
-        
+
         const adminProfitLoss = totalBets - totalWinnings;
 
         res.status(200).json({
@@ -420,7 +420,7 @@ export const getUserPassbook = async (req, res) => {
             const date = new Date(b.createdAt);
             const timeStr = date.toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
             const dateStr = date.toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-            
+
             passbook.push({
                 id: `bid-${b._id}`,
                 type: "DEBIT",
@@ -454,7 +454,7 @@ export const getUserPassbook = async (req, res) => {
             const date = new Date(b.createdAt);
             const timeStr = date.toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
             const dateStr = date.toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-            
+
             passbook.push({
                 id: `gd-bid-${b._id}`,
                 type: "DEBIT",
@@ -560,7 +560,7 @@ export const getUserByIdForAdmin = async (req, res) => {
 
         const deposits = transactions.filter(t => t.type === 'Deposit');
         const withdrawals = transactions.filter(t => t.type === 'Withdrawal');
-        
+
         res.status(200).json({
             success: true,
             user,
@@ -580,7 +580,7 @@ export const updatePaymentInfo = async (req, res) => {
         if (!userId) return res.status(401).json({ success: false, message: 'Unauthorized access due to missing userId' });
 
         const { bankName, accountHolderName, accountNumber, ifscCode, phonePeUpiId, googlePayUpiId, paytmNumber } = req.body;
-        
+
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
@@ -675,9 +675,9 @@ export const getReferralData = async (req, res) => {
         // Sort by total earned or referred count
         result.sort((a, b) => b.totalEarned - a.totalEarned);
 
-        res.status(200).json({ 
-            success: true, 
-            data: result 
+        res.status(200).json({
+            success: true,
+            data: result
         });
 
     } catch (error) {

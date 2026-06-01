@@ -7,10 +7,10 @@ import {
   User,
   RefreshCw,
   LayoutGrid,
-  ImagePlus, 
+  ImagePlus,
   Trash2,
   UploadCloud,
-  CheckCircle2, 
+  CheckCircle2,
   Power,
   Pencil
 } from 'lucide-react';
@@ -22,7 +22,7 @@ export const UpiSettingsPage = () => {
   const [upiId, setUpiId] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [isActive, setIsActive] = useState(false);
-  
+
   const [editingId, setEditingId] = useState(null);
 
   const [qrImage, setQrImage] = useState(null);
@@ -43,7 +43,7 @@ export const UpiSettingsPage = () => {
     setFetchingList(true);
     try {
       const response = await AxiosAdmin({
-        url: SummaryApi.getAllUpis.url, 
+        url: SummaryApi.getAllUpis.url,
         method: SummaryApi.getAllUpis.method,
       });
       if (response.data.success) {
@@ -59,16 +59,16 @@ export const UpiSettingsPage = () => {
   // 1. ACTIVE / INACTIVE TOGGLE FUNCTION (Fixed)
   const handleToggleActive = async (id, currentStatus) => {
     const newStatus = !currentStatus; // Current status ka ulta kar do
-    
-    if(!window.confirm(`Are you sure you want to ${newStatus ? 'ACTIVATE' : 'DEACTIVATE'} this UPI?`)) return;
+
+    if (!window.confirm(`Are you sure you want to ${newStatus ? 'ACTIVATE' : 'DEACTIVATE'} this UPI?`)) return;
 
     try {
       const response = await AxiosAdmin({
-        url: `${SummaryApi.setActiveUpi.url}/${id}`, 
+        url: `${SummaryApi.setActiveUpi.url}/${id}`,
         method: SummaryApi.setActiveUpi.method,
         data: { isActive: newStatus } // Naya status backend ko bhejo
       });
-      
+
       if (response.data.success) {
         toast.success(`UPI Successfully ${newStatus ? 'Activated' : 'Deactivated'}!`);
         fetchUpiList();
@@ -81,11 +81,11 @@ export const UpiSettingsPage = () => {
 
   // 2. DELETE FUNCTION
   const handleDeleteUpi = async (id) => {
-    if(!window.confirm("Are you sure you want to delete this UPI?")) return;
-    
+    if (!window.confirm("Are you sure you want to delete this UPI?")) return;
+
     try {
       const response = await AxiosAdmin({
-        url: `${SummaryApi.deleteUpi.url}/${id}`, 
+        url: `${SummaryApi.deleteUpi.url}/${id}`,
         method: SummaryApi.deleteUpi.method || 'DELETE',
       });
       if (response.data.success) {
@@ -104,13 +104,13 @@ export const UpiSettingsPage = () => {
     setUpiId(item.upiId);
     setDisplayName(item.merchantName);
     setIsActive(item.isActive);
-    
+
     if (item.qrCodeImage) {
       setPreviewUrl(`http://localhost:5000${item.qrCodeImage}`);
     } else {
       clearImage();
     }
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -136,11 +136,11 @@ export const UpiSettingsPage = () => {
   };
 
   const handleAddOrUpdateUpi = async (e) => {
-    e.preventDefault(); 
-    
+    e.preventDefault();
+
     if (!upiId || !displayName) {
-        toast.error("Please fill all text fields!");
-        return;
+      toast.error("Please fill all text fields!");
+      return;
     }
 
     setLoading(true);
@@ -157,14 +157,14 @@ export const UpiSettingsPage = () => {
       const response = await AxiosAdmin({
         url: url,
         method: method,
-        data: formData, 
-        headers: { 'Content-Type': 'multipart/form-data' } 
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
-      
-      if(response.data.success){
-          toast.success(editingId ? "UPI Updated Successfully!" : "UPI Added Successfully!");
-          handleCancelEdit(); 
-          fetchUpiList(); 
+
+      if (response.data.success) {
+        toast.success(editingId ? "UPI Updated Successfully!" : "UPI Added Successfully!");
+        handleCancelEdit();
+        fetchUpiList();
       }
     } catch (error) {
       console.error(error);
@@ -191,10 +191,10 @@ export const UpiSettingsPage = () => {
 
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          
+
           {/* Left Card: Add/Edit UPI */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 relative">
-            
+
             {editingId && (
               <div className="absolute -top-3 left-6 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm">
                 Edit Mode
@@ -260,14 +260,14 @@ export const UpiSettingsPage = () => {
             <div className="flex-1 flex flex-col justify-center">
               {!previewUrl ? (
                 <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-center bg-gray-50 hover:bg-gray-100 relative h-[300px]">
-                  <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onChange={handleImageChange}/>
+                  <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onChange={handleImageChange} />
                   <div className="bg-white p-4 rounded-full mb-4 shadow-sm"><UploadCloud className="w-10 h-10 text-[#3b82f6]" /></div>
                   <h3 className="text-lg font-semibold text-gray-700 mb-2">Click or drag image to upload</h3>
                 </div>
               ) : (
                 <div className="border border-gray-200 rounded-xl overflow-hidden bg-gray-50 flex flex-col items-center relative h-[300px]">
                   <button onClick={clearImage} type="button" className="absolute top-4 right-4 bg-red-100 hover:bg-red-500 text-red-600 hover:text-white p-2 rounded-full z-20"><Trash2 className="w-5 h-5" /></button>
-                  <div className="w-full h-full p-6 flex items-center justify-center"><img src={previewUrl} alt="Preview" className="max-h-full max-w-full object-contain rounded-lg"/></div>
+                  <div className="w-full h-full p-6 flex items-center justify-center"><img src={previewUrl} alt="Preview" className="max-h-full max-w-full object-contain rounded-lg" /></div>
                 </div>
               )}
             </div>
@@ -311,7 +311,7 @@ export const UpiSettingsPage = () => {
                       </td>
                       <td className="p-4 font-bold text-gray-800">{item.merchantName}</td>
                       <td className="p-4 text-gray-600 font-medium">{item.upiId}</td>
-                      
+
                       <td className="p-4 text-center">
                         {item.isActive ? (
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase"><CheckCircle2 className="w-3.5 h-3.5" /> Active</span>
@@ -323,20 +323,19 @@ export const UpiSettingsPage = () => {
                       {/* --- CLEANED AND FIXED ACTION COLUMN --- */}
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          
+
                           {/* 1. Toggle Active/Inactive Button */}
-                          <button 
-                            onClick={() => handleToggleActive(item._id, item.isActive)} 
-                            className={`p-2 rounded-lg transition-colors shadow-sm ${
-                                item.isActive 
+                          <button
+                            onClick={() => handleToggleActive(item._id, item.isActive)}
+                            className={`p-2 rounded-lg transition-colors shadow-sm ${item.isActive
                                 ? 'bg-red-50 text-red-500 hover:bg-red-500 hover:text-white' // Active -> Deactivate (Red)
                                 : 'bg-green-50 text-green-600 hover:bg-green-600 hover:text-white' // Inactive -> Activate (Green)
-                            }`} 
+                              }`}
                             title={item.isActive ? "Click to Deactivate" : "Click to Activate"}
                           >
                             <Power className="w-4 h-4" />
                           </button>
-                          
+
                           {/* 2. Edit Button */}
                           <button onClick={() => handleEditClick(item)} className="p-2 bg-yellow-50 text-yellow-600 hover:bg-yellow-500 hover:text-white rounded-lg transition-colors shadow-sm" title="Edit UPI">
                             <Pencil className="w-4 h-4" />

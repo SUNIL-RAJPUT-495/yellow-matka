@@ -10,13 +10,13 @@ const DepositPage = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
- const balance = useSelector((state) => state.user.walletBalance);
+  const balance = useSelector((state) => state.user.walletBalance);
   // States for manual payment process
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [utrNumber, setUtrNumber] = useState('');
-  
+
   // API se aane wale data ke liye naye states
-  const [adminUpi, setAdminUpi] = useState('Loading...'); 
+  const [adminUpi, setAdminUpi] = useState('Loading...');
   const [qrCodeUrl, setQrCodeUrl] = useState(null);
 
   const [minDeposit, setMinDeposit] = useState(200);
@@ -46,15 +46,15 @@ const DepositPage = () => {
         url: SummaryApi.getActiveUpi.url,
         method: SummaryApi.getActiveUpi.method,
       });
-      
+
       if (response.data.success && response.data.data) {
-          setAdminUpi(response.data.data.upiId);
-          // Agar database me image path hai, toh state me save karein
-          if (response.data.data.qrCodeImage) {
-              setQrCodeUrl(response.data.data.qrCodeImage);
-          }
+        setAdminUpi(response.data.data.upiId);
+        // Agar database me image path hai, toh state me save karein
+        if (response.data.data.qrCodeImage) {
+          setQrCodeUrl(response.data.data.qrCodeImage);
+        }
       } else {
-          setAdminUpi("UPI Not Available");
+        setAdminUpi("UPI Not Available");
       }
     } catch (error) {
       console.error("Fetch Active UPI Error:", error);
@@ -90,21 +90,21 @@ const DepositPage = () => {
     setLoading(true);
     try {
       const { data } = await Axios({
-        url: SummaryApi.createOrder.url, 
-        method: SummaryApi.createOrder.method, 
-        data: { 
-            amount: Number(amount)
+        url: SummaryApi.createOrder.url,
+        method: SummaryApi.createOrder.method,
+        data: {
+          amount: Number(amount)
         }
       });
 
       console.log("Gateway Response:", data);
 
       if (data.success && (data.payment_url || data.redirect_url || data.url)) {
-          const paymentLink = data.payment_url || data.redirect_url || data.url;
-          window.location.href = paymentLink;
-      } 
+        const paymentLink = data.payment_url || data.redirect_url || data.url;
+        window.location.href = paymentLink;
+      }
       else {
-          throw new Error(data.message || "Failed to initiate payment. No URL received.");
+        throw new Error(data.message || "Failed to initiate payment. No URL received.");
       }
 
     } catch (error) {
@@ -241,17 +241,17 @@ const DepositPage = () => {
 
                 <div className="bg-gray-50 rounded-2xl p-6 border-2 border-dashed border-gray-300 text-center mb-8">
                   <p className="text-gray-600 font-bold mb-2">Scan QR or Copy UPI ID to pay</p>
-                  
+
                   <div className="flex justify-center mb-4">
                     {/* Yahan par image aur icon toggle hoga */}
                     <div className="w-40 h-40 bg-white border border-gray-200 rounded-xl flex items-center justify-center shadow-sm p-2 overflow-hidden">
                       {qrCodeUrl ? (
                         // Dhyan de: Agar aapka backend localhost:5000 par hai, aur Axios baseURL set hai, 
                         // toh aap seedha 'http://localhost:5000' + qrCodeUrl likh sakte hain image src me.
-                        <img 
-                            src={`http://localhost:5000${qrCodeUrl}`} // Apna backend URL check kar lein
-                            alt="Admin QR Code" 
-                            className="w-full h-full object-contain" 
+                        <img
+                          src={`http://localhost:5000${qrCodeUrl}`} // Apna backend URL check kar lein
+                          alt="Admin QR Code"
+                          className="w-full h-full object-contain"
                         />
                       ) : (
                         <FaQrcode className="text-6xl text-gray-300" />
