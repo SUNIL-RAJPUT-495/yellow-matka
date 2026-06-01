@@ -22,7 +22,7 @@ const app = express();
 
 
 app.use(cors({ 
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://mahadematka.vercel.app", process.env.FRONTEND_URL], // Apna production URL env mein daal dena
+  origin: ["http://localhost:5173", "http://localhost:5174","https://yellow-matka.vercel.app", process.env.FRONTEND_URL], 
   credentials: true 
 }));
 
