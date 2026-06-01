@@ -1,0 +1,394 @@
+@import "tailwindcss";
+
+/* --- PREMIUM YELLOW & AMBER BRAND THEME --- */
+
+/* Primary brand background (Headers, sidebars, active areas) */
+.bg-mahadev {
+  background-color: #facc15 !important; /* Vibrant golden yellow */
+  color: #0f172a !important; /* Deep slate for high contrast */
+}
+
+/* Ensure all text, icons, and svgs inside header elements are high contrast slate */
+.bg-mahadev *,
+.bg-mahadev svg,
+.bg-mahadev svg * {
+  color: #0f172a !important;
+  fill: currentColor !important;
+}
+
+/* Balance bubble and secondary headers in bg-mahadev headers */
+.bg-mahadev .bg-white\/20,
+.bg-mahadev .bg-white\/30 {
+  background-color: rgba(15, 23, 42, 0.12) !important;
+  border-color: rgba(15, 23, 42, 0.25) !important;
+  color: #0f172a !important;
+}
+
+/* Primary brand text color (titles, highlight numbers) */
+.text-mahadev {
+  color: #d97706 !important; /* High readability amber */
+}
+
+/* Warm Premium Yellow & Cream Background Overrides */
+body,
+.bg-gray-50,
+.min-h-screen.bg-gray-50,
+.bg-\[\#f3f4f6\],
+.bg-\[\#f4f6f8\],
+.bg-\#f4f6f8,
+.bg-\#f3f4f6 {
+  background-color: #fefce8 !important; /* Soft warm cream-yellow */
+}
+
+/* White containers and card-like boxes styled into bright premium cream */
+.bg-white,
+.bg-\[\#f8f9fa\],
+.bg-\[\#f4f4f4\],
+.bg-\[\#fffdeb\],
+.bg-gray-100 {
+  background-color: #fffdf0 !important; /* Warm premium ivory/cream */
+}
+
+/* Hover backgrounds to soft yellow */
+.hover\:bg-gray-50:hover,
+.hover\:bg-gray-100:hover,
+.hover\:bg-purple-50:hover,
+.hover\:bg-purple-100:hover,
+.hover\:bg-blue-50:hover,
+.hover\:bg-blue-100:hover,
+.group:hover .group-hover\:bg-purple-50 {
+  background-color: #fef9c3 !important;
+}
+
+/* Login/Signup/Auth Pages Overrides */
+.bg-gradient-to-br.from-\[\#31004A\].to-\[\#601a91\] {
+  background-image: linear-gradient(to bottom right, #facc15, #eab308) !important;
+  color: #0f172a !important;
+}
+
+.text-transparent.bg-clip-text.bg-gradient-to-br.from-\[\#2D144B\].to-\[\#7f29c4\] {
+  background-image: linear-gradient(to bottom right, #d97706, #78350f) !important; /* Amber text gradient */
+}
+
+/* Input Fields Focus & Icons */
+.focus-within\:border-\[\#31004A\]:focus-within {
+  border-color: #eab308 !important;
+}
+
+.focus-within\:ring-\[\#31004A\]\/10:focus-within {
+  --tw-ring-color: rgba(234, 179, 8, 0.25) !important;
+}
+
+.bg-gradient-to-br.from-\[\#31004A\].to-\[\#51167a\] {
+  background-image: linear-gradient(to bottom right, #eab308, #ca8a04) !important;
+  color: #0f172a !important;
+}
+
+/* Primary/Action buttons gradients */
+.bg-gradient-to-r.from-\[\#31004A\].to-\[\#601a91\] {
+  background-image: linear-gradient(to right, #facc15, #eab308) !important;
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+.bg-gradient-to-r.from-\[\#31004A\].to-\[\#601a91\]:hover {
+  background-image: linear-gradient(to right, #fde047, #facc15) !important;
+  box-shadow: 0 10px 15px -3px rgba(234, 179, 8, 0.3) !important;
+}
+
+.text-\[\#31004A\] {
+  color: #d97706 !important;
+}
+
+.hover\:text-\[\#601a91\]:hover {
+  color: #ca8a04 !important;
+}
+
+/* Game Results and Table Chart Overrides */
+.text-black {
+  color: #1e293b !important;
+}
+
+/* --- COMPREHENSIVE GLOBAL YELLOW & GOLD BRAND OVERRIDES --- */
+
+/* 1. Bulletproof Purple, Dark, and Blue Gradients Overrides */
+[class*="bg-gradient-"][class*="from-[#380e4b]" i],
+[class*="bg-gradient-"][class*="from-[#31004A]" i],
+[class*="bg-gradient-"][class*="from-[#2d0042]" i],
+[class*="bg-gradient-"][class*="from-[#2f0c4c]" i],
+[class*="bg-gradient-"][class*="from-[#3b0b59]" i],
+[class*="bg-gradient-"][class*="from-[#3b125a]" i],
+.bg-gradient-to-r.from-\[\#380e4b\].to-\[\#5a1b75\],
+.bg-gradient-to-r.from-\[\#380e4b\].to-\[\#601a91\],
+.bg-gradient-to-br.from-\[\#380e4b\].to-\[\#5a1b75\],
+.bg-gradient-to-br.from-\[\#380e4b\].to-\[\#601a91\],
+.bg-gradient-to-r.from-\[\#31004A\].to-\[\#601a91\],
+.bg-gradient-to-br.from-\[\#31004A\].to-\[\#601a91\],
+.bg-gradient-to-br.from-\[\#31004A\].to-\[\#51167a\],
+.bg-gradient-to-r.from-\[\#31004A\].to-\[\#51167a\],
+.bg-gradient-to-br.from-\[\#380e4b\].to-\[\#210c2e\],
+.bg-gradient-to-r.from-\[\#380e4b\].to-\[\#210c2e\],
+.bg-gradient-to-r.from-\[\#2d0042\].to-\[\#2c094a\],
+.bg-gradient-to-r.from-\[\#fbc02d\].to-\[\#e6a100\],
+.bg-gradient-to-r.from-\[\#380e4b\].to-\[\#5a1b75\] *,
+.bg-gradient-to-r.from-\[\#380e4b\].to-\[\#601a91\] *,
+.bg-gradient-to-br.from-\[\#380e4b\].to-\[\#5a1b75\] *,
+.bg-gradient-to-br.from-\[\#380e4b\].to-\[\#601a91\] *,
+.bg-gradient-to-r.from-\[\#31004A\].to-\[\#601a91\] *,
+.bg-gradient-to-br.from-\[\#31004A\].to-\[\#601a91\] * {
+  background-image: linear-gradient(to right, #facc15, #eab308) !important;
+  color: #0f172a !important;
+}
+
+/* 2. Solid Purple, Dark and Blue Background Overrides (Case Insensitive Attribute Selectors) */
+[class*="bg-[#380e4b]" i],
+[class*="bg-[#210c2e]" i],
+[class*="bg-[#31004A]" i],
+[class*="bg-[#5a1b75]" i],
+[class*="bg-[#601a91]" i],
+[class*="bg-[#2d0042]" i],
+[class*="bg-[#2f0c4c]" i],
+[class*="bg-[#3b0b59]" i],
+[class*="bg-[#3b125a]" i],
+[class*="bg-[#2c094a]" i],
+[class*="bg-[#3e1363]" i],
+[class*="bg-[#5a3275]" i],
+[class*="bg-purple-500"],
+[class*="bg-purple-600"],
+[class*="bg-purple-700"],
+[class*="bg-blue-500"],
+[class*="bg-blue-600"],
+[class*="bg-blue-700"],
+[class*="bg-indigo-500"],
+[class*="bg-indigo-600"],
+[class*="bg-indigo-700"],
+[class*="bg-[#3f51b5]" i],
+.bg-\[\#380e4b\],
+.bg-\[\#210c2e\],
+.bg-\[\#31004A\],
+.bg-\[\#5a1b75\],
+.bg-\[\#601a91\],
+.bg-\[\#2d0042\],
+.bg-\[\#2f0c4c\],
+.bg-\[\#3b0b59\],
+.bg-\[\#3b125a\],
+.bg-\[\#2c094a\],
+.bg-\[\#3e1363\],
+.bg-\[\#5a3275\],
+.bg-purple-500,
+.bg-purple-600,
+.bg-purple-700,
+.bg-blue-500,
+.bg-blue-600,
+.bg-blue-700,
+.bg-indigo-500,
+.bg-indigo-600,
+.bg-indigo-700,
+.bg-\[\#3f51b5\],
+.bg-blue-100,
+.bg-purple-100 {
+  background-color: #facc15 !important;
+  background-image: none !important;
+  color: #0f172a !important;
+}
+
+/* Ensure all text/icons inside these elements are slate black for visibility */
+[class*="bg-[#380e4b]" i] *,
+[class*="bg-[#210c2e]" i] *,
+[class*="bg-[#31004A]" i] *,
+[class*="bg-[#5a1b75]" i] *,
+[class*="bg-[#601a91]" i] *,
+[class*="bg-[#2d0042]" i] *,
+[class*="bg-[#2f0c4c]" i] *,
+[class*="bg-[#3b0b59]" i] *,
+[class*="bg-[#3b125a]" i] *,
+[class*="bg-[#2c094a]" i] *,
+[class*="bg-[#3e1363]" i] *,
+[class*="bg-[#5a3275]" i] *,
+[class*="bg-purple-500"] *,
+[class*="bg-purple-600"] *,
+[class*="bg-blue-500"] *,
+[class*="bg-blue-600"] *,
+[class*="bg-indigo-500"] *,
+[class*="bg-indigo-600"] *,
+[class*="bg-[#3f51b5]" i] *,
+[class*="bg-[#380e4b]" i] svg,
+[class*="bg-[#210c2e]" i] svg,
+[class*="bg-[#31004A]" i] svg,
+[class*="bg-[#5a1b75]" i] svg,
+[class*="bg-[#601a91]" i] svg,
+[class*="bg-[#2d0042]" i] svg,
+[class*="bg-[#2f0c4c]" i] svg,
+[class*="bg-[#3b0b59]" i] svg,
+[class*="bg-[#3b125a]" i] svg,
+[class*="bg-[#2c094a]" i] svg,
+[class*="bg-[#3e1363]" i] svg,
+[class*="bg-[#5a3275]" i] svg,
+.bg-\[\#380e4b\] *,
+.bg-\[\#210c2e\] *,
+.bg-\[\#31004A\] *,
+.bg-\[\#5a1b75\] *,
+.bg-\[\#601a91\] *,
+.bg-\[\#2d0042\] *,
+.bg-\[\#2f0c4c\] *,
+.bg-\[\#3b0b59\] *,
+.bg-\[\#3b125a\] *,
+.bg-\[\#2c094a\] *,
+.bg-\[\#3e1363\] *,
+.bg-\[\#5a3275\] *,
+.bg-purple-500 *,
+.bg-purple-600 *,
+.bg-blue-500 *,
+.bg-blue-600 *,
+.bg-indigo-500 *,
+.bg-indigo-600 *,
+.bg-\[\#3f51b5\] *,
+.bg-blue-100 *,
+.bg-purple-100 *,
+.bg-\[\#380e4b\] svg,
+.bg-\[\#210c2e\] svg,
+.bg-\[\#31004A\] svg,
+.bg-\[\#5a1b75\] svg,
+.bg-\[\#601a91\] svg,
+.bg-\[\#2d0042\] svg,
+.bg-\[\#2f0c4c\] svg,
+.bg-\[\#3b0b59\] svg,
+.bg-\[\#3b125a\] svg,
+.bg-\[\#2c094a\] svg,
+.bg-\[\#3e1363\] svg,
+.bg-\[\#5a3275\] svg,
+.bg-purple-500 svg,
+.bg-purple-600 svg,
+.bg-blue-500 svg,
+.bg-blue-600 svg,
+.bg-indigo-500 svg,
+.bg-indigo-600 svg,
+.bg-\[\#3f51b5\] svg {
+  color: #0f172a !important;
+  fill: currentColor !important;
+}
+
+/* 3. Action Button Overrides (Green, Red, Blue, WhatsApp) using Attribute Selectors */
+[class*="bg-green-500"],
+[class*="bg-green-600"],
+[class*="bg-[#25D366]" i],
+[class*="bg-emerald-500"],
+[class*="bg-emerald-600"],
+.bg-green-500,
+.bg-green-600,
+.bg-\[\#25D366\],
+.bg-emerald-500,
+.bg-emerald-600 {
+  background-color: #eab308 !important;
+  background-image: linear-gradient(to right, #fde047, #facc15) !important;
+  color: #0f172a !important;
+  border-color: #eab308 !important;
+}
+
+[class*="bg-red-500"],
+[class*="bg-red-600"],
+[class*="bg-[#df3937]" i],
+.bg-red-500,
+.bg-red-600,
+.bg-\[\#df3937\],
+.bg-[#df3937] {
+  background-color: #d97706 !important;
+  background-image: linear-gradient(to right, #facc15, #d97706) !important;
+  color: #0f172a !important;
+  border-color: #d97706 !important;
+}
+
+/* Make sure text & SVGs inside green/red buttons are black */
+[class*="bg-green-500"] *,
+[class*="bg-green-600"] *,
+[class*="bg-[#25D366]" i] *,
+[class*="bg-red-500"] *,
+[class*="bg-red-600"] *,
+[class*="bg-[#df3937]" i] *,
+.bg-green-500 *,
+.bg-green-600 *,
+.bg-\[\#25D366\] *,
+.bg-emerald-500 *,
+.bg-emerald-600 *,
+.bg-red-500 *,
+.bg-red-600 *,
+.bg-\[\#df3937\] *,
+.bg-green-500 svg,
+.bg-green-600 svg,
+.bg-\[\#25D366\] svg,
+.bg-red-500 svg,
+.bg-red-600 svg,
+.bg-\[\#df3937\] svg {
+  color: #0f172a !important;
+  fill: currentColor !important;
+}
+
+/* 4. Text Color Highlights using Attribute Selectors (Change blue/purple/indigo/grey to rich readable amber/gold/bronze) */
+[class*="text-[#380e4b]" i],
+[class*="text-[#31004A]" i],
+[class*="text-[#601a91]" i],
+[class*="text-[#5a1b75]" i],
+[class*="text-[#2d0042]" i],
+[class*="text-[#2f0c4c]" i],
+[class*="text-[#2c094a]" i],
+[class*="text-purple-"],
+[class*="text-blue-"],
+[class*="text-indigo-"],
+.text-\[\#380e4b\],
+.text-\[\#31004A\],
+.text-\[\#601a91\],
+.text-\[\#5a1b75\],
+.text-\[\#2d0042\],
+.text-\[\#2f0c4c\],
+.text-\[\#2c094a\],
+.text-purple-700,
+.text-purple-600,
+.text-blue-600,
+.text-blue-700,
+.text-indigo-600,
+.text-indigo-700,
+.text-[#380e4b],
+.text-[#2f0c4c],
+.text-[#2d0042],
+.text-[#2c094a],
+.text-gray-500,
+.text-gray-600,
+.text-gray-700 {
+  color: #a16207 !important; /* Rich readable amber/gold */
+}
+
+/* Extreme readable highlights (slate black text on dark yellow headers, e.g. text-white in header bg-mahadev) */
+.bg-mahadev,
+.bg-mahadev *,
+.bg-mahadev svg,
+.bg-mahadev svg * {
+  color: #0f172a !important;
+}
+
+/* 5. Borders Overrides to Soft Golden Yellows (Attribute Selectors) */
+[class*="border-gray-"],
+[class*="border-purple-"],
+[class*="border-blue-"],
+[class*="border-[#482069]" i],
+.border-gray-100,
+.border-gray-200,
+.border-gray-300,
+.border-purple-100,
+.border-purple-200,
+.border-blue-100,
+.border-blue-200,
+.border-\[\#482069\],
+.border-[#482069] {
+  border-color: #fef08a !important; /* Soft yellow border */
+}
+
+/* 6. Focus Ring Overrides (Attribute Selectors) */
+[class*="focus:ring-"],
+.focus\:ring-\[\#380e4b\]\/20:focus,
+.focus\:ring-\[\#31004A\]\/20:focus,
+.focus\:ring-\[\#601a91\]\/20:focus,
+.focus\:ring-blue-500:focus,
+.focus\:ring-purple-500:focus {
+  --tw-ring-color: rgba(250, 204, 21, 0.4) !important;
+  border-color: #eab308 !important;
+}

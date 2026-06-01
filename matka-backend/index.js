@@ -1,0 +1,78 @@
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import connectDB from './Config/Db.js';
+import morgan from 'morgan';
+import userRouter from './routes/userRouter.js';
+import transactionRouter from './routes/transactionRoutes.js';
+import notificationRouter from './routes/notificationRoutes.js';
+import chatRouter from './routes/chat.router.js';
+import bidRouter from './routes/bidRoutes.js';
+import marketRouter from './routes/marketRoutes.js';
+import upiRoutes from './routes/upiRoutes.js';
+import { setupStaticFolders } from './middleware/staticConfig.js';
+import transactionSettingRouter from './routes/transationSetting.router.js';
+import settingsRouter from './routes/settingsRouter.js';
+import gdMarketRouter from './routes/gdMarketRoutes.js';
+import gdBidRouter from './routes/gdBidRoutes.js';
+import cron from 'node-cron';
+import { resetDailyMarketDisplay } from './jobs/resetMarketDisplay.js';
+
+const app = express();
+
+
+app.use(cors({ 
+  origin: ["http://localhost:5173", "http://localhost:5174", "https://mahadematka.vercel.app", process.env.FRONTEND_URL], // Apna production URL env mein daal dena
+  credentials: true 
+}));
+
+app.use(express.json());
+app.use(morgan('dev'));
+
+setupStaticFolders(app);
+connectDB();
+
+// Har din raat 12:00 IST — home/market cards par live result hata kar *** / ** placeholders
+cron.schedule(
+    '0 0 * * *',
+    async () => {
+        try {
+            const r = await resetDailyMarketDisplay();
+            console.log(
+                `[cron] Daily market display reset — modified: ${r.modifiedCount ?? r.matchedCount}`
+            );
+        } catch (e) {
+            console.error('[cron] resetDailyMarketDisplay failed:', e);
+        }
+    },
+    { timezone: 'Asia/Kolkata' }
+);
+
+app.get('/', (req, res) => {
+  res.send('Admin Panel API is running on Vercel Serverless!');
+});
+
+
+app.use("/api/user", userRouter);
+app.use("/api/bid", bidRouter);
+app.use("/api/market", marketRouter);
+app.use("/api/transaction", transactionRouter);
+app.use("/api/notification", notificationRouter);
+app.use("/api/chat", chatRouter);
+app.use('/api/upi', upiRoutes);
+app.use('/api/transaction-setting', transactionSettingRouter);
+app.use('/api/settings', settingsRouter);
+app.use('/api/gd-market', gdMarketRouter);
+app.use('/api/gd-bid', gdBidRouter);
+
+const PORT = process.env.PORT || 5000;
+
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running locally on http://localhost:${PORT}`);
+  });
+}
+
+
+export default app;
