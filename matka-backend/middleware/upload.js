@@ -4,8 +4,12 @@ import path from 'path';
 import fs from 'fs';
 
 const uploadDir = 'uploads/';
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+try {
+    if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+    }
+} catch (error) {
+    console.warn("⚠️ Could not create uploads directory (expected in read-only environments like Vercel):", error.message);
 }
 
 const storage = multer.diskStorage({
