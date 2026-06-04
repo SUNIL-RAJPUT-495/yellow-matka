@@ -5,7 +5,7 @@ import { useFetchProfile } from '../hooks/useFetchProfile';
 // --- USER PROTECTED ROUTE ---
 export const ProtectedRoute = ({ children }) => {
   const location = useLocation();
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem('yellow_matka');
   const fetchProfile = useFetchProfile();
 
   useEffect(() => {
@@ -15,8 +15,8 @@ export const ProtectedRoute = ({ children }) => {
   }, [token]);
 
   if (!token || token === "undefined" || token === "null" || token === "") {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user_data'); 
+    localStorage.removeItem('yellow_matka');
+    localStorage.removeItem('yellow_matka_user'); 
 
     return <Navigate to="/Login" state={{ from: location }} replace />;
   }

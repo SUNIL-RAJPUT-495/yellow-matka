@@ -31,16 +31,13 @@ export const TelegramPage = () => {
   }, []);
 
   const handleJoin = () => {
-    if (telegramLink) {
-        // Ensure link starts with http or t.me
-        let url = telegramLink;
-        if (!url.startsWith('http') && !url.startsWith('t.me')) {
-            url = `https://t.me/${url}`;
-        }
-      window.open(url, '_blank');
-    } else {
-      alert("Telegram link not available");
+    let url = telegramLink;
+    if (!url) {
+      url = 'https://web.telegram.org/k/';
+    } else if (!url.startsWith('http') && !url.startsWith('t.me')) {
+      url = `https://t.me/${url}`;
     }
+    window.open(url, '_blank');
   };
 
   return (
@@ -81,14 +78,9 @@ export const TelegramPage = () => {
                 ) : (
                     <button 
                         onClick={handleJoin}
-                        disabled={!telegramLink}
-                        className={`w-full py-4 rounded-xl font-black text-white uppercase tracking-widest transition-all shadow-lg ${
-                            telegramLink 
-                            ? 'bg-blue-500 hover:bg-blue-600 hover:shadow-blue-200 active:scale-95' 
-                            : 'bg-gray-300 cursor-not-allowed'
-                        }`}
+                        className="w-full py-4 rounded-xl font-black text-white uppercase tracking-widest transition-all shadow-lg bg-blue-500 hover:bg-blue-600 hover:shadow-blue-200 active:scale-95"
                     >
-                        {telegramLink ? 'Join Channel Now' : 'Link Not Available'}
+                        Join Channel Now
                     </button>
                 )}
                 

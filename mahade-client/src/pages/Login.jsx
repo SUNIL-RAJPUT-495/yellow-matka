@@ -64,9 +64,9 @@ export const Login = () => {
             });
 
             if (res.data.success) {
-                localStorage.setItem('access_token', res.data.token);
+                localStorage.setItem('yellow_matka', res.data.token);
 
-                localStorage.setItem('user_data', JSON.stringify(res.data.user));
+                localStorage.setItem('yellow_matka_user', JSON.stringify(res.data.user));
                 dispatch(setUser(res.data.user));
 
                 toast.success("Login Successful!");

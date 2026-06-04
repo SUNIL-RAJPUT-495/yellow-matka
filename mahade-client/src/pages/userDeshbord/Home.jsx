@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   FaWallet, FaWhatsapp, FaStar, FaPlusCircle,
   FaRegClock, FaHome, FaBook, FaHeadset, FaListAlt,
-  FaBars, FaChartBar
+  FaBars, FaChartBar, FaTelegram
 } from "react-icons/fa";
 import { BiMoney, BiMoneyWithdraw } from 'react-icons/bi';
 import { IoMdNotifications } from "react-icons/io";
@@ -18,8 +18,9 @@ const Home = () => {
   const balance = useSelector((state) => state.user.walletBalance);
   const [gamesList, setGamesList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [webName, setWebName] = useState('MAHADEV');
+  const [webName, setWebName] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
+  const [telegram, setTelegram] = useState('');
 
   const fetchSettings = async () => {
     try {
@@ -30,6 +31,7 @@ const Home = () => {
       if (res.data.success) {
         if (res.data.contact.websiteName) setWebName(res.data.contact.websiteName);
         if (res.data.contact.whatsapp) setWhatsapp(res.data.contact.whatsapp);
+        if (res.data.contact.telegram) setTelegram(res.data.contact.telegram);
       }
     } catch (error) {
       console.error("Error fetching branding:", error);
@@ -64,6 +66,18 @@ const Home = () => {
       window.open(`https://wa.me/${cleanNum}`, '_blank');
     } else {
       alert("WhatsApp number not available");
+    }
+  };
+
+  const handleTelegramClick = () => {
+    if (telegram) {
+      let url = telegram;
+      if (!url.startsWith('http') && !url.startsWith('t.me')) {
+        url = `https://t.me/${url}`;
+      }
+      window.open(url, '_blank');
+    } else {
+      window.open('https://web.telegram.org/k/', '_blank');
     }
   };
 
@@ -117,13 +131,13 @@ const Home = () => {
             </button>
           </div>
           <div className='flex justify-between gap-3 sm:gap-4'>
-            {/* Support Channel Button */}
+            {/* Telegram Button */}
             <button
-              onClick={() => navigate('/gali-desawar')}
-              className="flex-1 bg-mahadev flex items-center justify-center gap-2 p-3 sm:p-4 text-white rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              onClick={handleTelegramClick}
+              className="flex-1 bg-[#0088cc] flex items-center justify-center gap-2 p-3 sm:p-4 text-white rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
             >
-              <FaHeadset className="text-blue-300 text-2xl" />
-              <span className="font-bold tracking-wide text-sm sm:text-base">Gali Disawar</span>
+              <FaTelegram className="text-white text-2xl" />
+              <span className="font-bold tracking-wide text-sm sm:text-base">Telegram</span>
             </button>
             {/* WhatsApp Redirect Button */}
             <button

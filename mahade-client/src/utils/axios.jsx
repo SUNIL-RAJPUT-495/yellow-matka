@@ -8,7 +8,7 @@ const Axios = axios.create({
 
 Axios.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("yellow_matka");
 
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -22,8 +22,8 @@ Axios.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response && error.response.status === 401) {
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("user_data");
+            localStorage.removeItem("yellow_matka");
+            localStorage.removeItem("yellow_matka_user");
             window.dispatchEvent(new CustomEvent("on-unauthorized"));
         }
         return Promise.reject(error);

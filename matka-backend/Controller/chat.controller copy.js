@@ -3,13 +3,13 @@ import User from "../models/User.js";
 import { pusher } from "../utils/pusher.js";
 import mongoose from "mongoose";
 
-// Helper function to get Admin ID
+
 const getAdminId = async () => {
     const admin = await User.findOne({ role: { $regex: /^admin$/i } }).lean();
     return admin ? admin._id.toString() : null;
 };
 
-// --- 1. SEND MESSAGE 
+
 export const sendMessage = async (req, res) => {
     try {
         const { message, receiver } = req.body;
@@ -86,7 +86,8 @@ export const sendMessage = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
-// --- 2. GET CHAT USERS (Admin Sidebar) ---
+
+
 export const getChatUsers = async (req, res) => {
     try {
         const loggedInUserId = req.userId.toString();
@@ -113,6 +114,7 @@ export const getChatUsers = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
 
 // --- 3. GET CHAT HISTORY ---
 export const getUserChatHistory = async (req, res) => {

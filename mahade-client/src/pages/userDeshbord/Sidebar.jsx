@@ -21,6 +21,8 @@ export const Sidebar = ({ closeSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
+    localStorage.removeItem("yellow_matka_user");
+    localStorage.removeItem("yellow_matka");
     localStorage.removeItem("user_data");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");

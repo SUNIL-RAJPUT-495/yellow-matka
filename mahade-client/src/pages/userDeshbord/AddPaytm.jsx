@@ -28,7 +28,7 @@ export const AddPaytm = () => {
     
     setIsSubmitting(true);
     try {
-      const token = localStorage.getItem('access_token');
+      const token = localStorage.getItem('yellow_matka');
       const res = await axios({
         url: SummaryApi.updatePaymentInfo.url,
         method: SummaryApi.updatePaymentInfo.method,
